@@ -5,9 +5,11 @@ import { EmailVerificationCodeRepository } from "../../core/infrastructure/repos
 import { DI_SYMBOLS } from "../types.js";
 
 const initializeModule = (bind: interfaces.Bind) => {
-  bind<IEmailVerificationCodeRepository>(DI_SYMBOLS.IEmailVerificationCodeRepository).to(
-    EmailVerificationCodeRepository
-  );
+  bind<IEmailVerificationCodeRepository>(
+    DI_SYMBOLS.IEmailVerificationCodeRepository,
+  ).to(EmailVerificationCodeRepository);
 };
 
-export const EmailVerificationCodeModule = new ContainerModule(initializeModule);
+export const EmailVerificationCodeModule = new ContainerModule(
+  initializeModule,
+);

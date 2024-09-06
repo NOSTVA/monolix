@@ -4,7 +4,9 @@ import { type User } from "../../entities/models/user.js";
 
 export interface IAuthenticationService {
   generateUserId(): string;
-  validateSession(sessionId: Session["id"]): Promise<{ user: User | null; session: Session | null }>;
+  validateSession(
+    sessionId: Session["id"],
+  ): Promise<{ user: User | null; session: Session | null }>;
   readSessionCookie(cookie: string): string | null;
   createSessionCookie(sessionId: Session["id"]): Cookie;
   createBlankSessionCookie(): Cookie;

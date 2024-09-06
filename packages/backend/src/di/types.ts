@@ -13,7 +13,9 @@ export const DI_SYMBOLS = {
   // Repositories
   IUsersRepository: Symbol.for("IUsersRepository"),
   IOAuthRepository: Symbol.for("IOAuthRepository"),
-  IEmailVerificationCodeRepository: Symbol.for("IEmailVerificationCodeRepository"),
+  IEmailVerificationCodeRepository: Symbol.for(
+    "IEmailVerificationCodeRepository",
+  ),
 
   ITransaction: Symbol.for("ITransaction"),
 };

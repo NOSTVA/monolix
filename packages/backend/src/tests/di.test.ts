@@ -1,6 +1,10 @@
 import "reflect-metadata";
 
-import { destroyContainer, getInjection, initializeContainer } from "../di/container.js";
+import {
+  destroyContainer,
+  getInjection,
+  initializeContainer,
+} from "../di/container.js";
 import { UsersRepository } from "../core/infrastructure/repositories/users.repository.js";
 import { AuthenticationService } from "../core/infrastructure/services/authentication.service.js";
 import { afterEach, beforeEach, expect, it } from "vitest";
@@ -25,6 +29,10 @@ it("testing repos and services", async () => {
   const usersRepository = getInjection("IUsersRepository");
   expect(usersRepository).toBeInstanceOf(UsersRepository);
 
-  const emailVerificationCodeRepository = getInjection("IEmailVerificationCodeRepository");
-  expect(emailVerificationCodeRepository).toBeInstanceOf(EmailVerificationCodeRepository);
+  const emailVerificationCodeRepository = getInjection(
+    "IEmailVerificationCodeRepository",
+  );
+  expect(emailVerificationCodeRepository).toBeInstanceOf(
+    EmailVerificationCodeRepository,
+  );
 });

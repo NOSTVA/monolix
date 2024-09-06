@@ -3,7 +3,10 @@ import { getInjection } from "../../../../di/container.js";
 import { createDate, TimeSpan } from "oslo";
 import env from "../../../env.js";
 
-export async function sendEmailVerificationCode(input: { userId: string; email: string }) {
+export async function sendEmailVerificationCode(input: {
+  userId: string;
+  email: string;
+}) {
   const { userId, email } = input;
   const mailerService = getInjection("IMailerService");
 
@@ -20,14 +23,24 @@ export async function sendEmailVerificationCode(input: { userId: string; email: 
   });
 }
 
-async function generateEmailVerificationCode(input: { userId: string; email: string }) {
+async function generateEmailVerificationCode(input: {
+  userId: string;
+  email: string;
+}) {
   const { userId, email } = input;
-  const emailVerificationCodeRepository = getInjection("IEmailVerificationCodeRepository");
+  const emailVerificationCodeRepository = getInjection(
+    "IEmailVerificationCodeRepository",
+  );
 
   await emailVerificationCodeRepository.deleteVerificationCodeByUserId(userId);
 
   const code = generateRandomString(8, alphabet("0-9"));
   const expiresAt = createDate(new TimeSpan(15, "m"));
 
-  return await emailVerificationCodeRepository.createVerificationCode({ code, email, userId, expiresAt });
+  return await emailVerificationCodeRepository.createVerificationCode({
+    code,
+    email,
+    userId,
+    expiresAt,
+  });
 }

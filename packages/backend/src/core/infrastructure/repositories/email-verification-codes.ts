@@ -8,13 +8,18 @@ import { DatabaseOperationError } from "../../entities/errors/common.js";
 import { eq } from "drizzle-orm";
 
 @injectable()
-export class EmailVerificationCodeRepository implements IEmailVerificationCodeRepository {
+export class EmailVerificationCodeRepository
+  implements IEmailVerificationCodeRepository
+{
   async createVerificationCode(
     input: EmailVerificationCode,
-    conn: DrizzleConnection = db
+    conn: DrizzleConnection = db,
   ): Promise<EmailVerificationCode> {
     try {
-      const query = conn.insert(emailVerificationCodes).values(input).returning();
+      const query = conn
+        .insert(emailVerificationCodes)
+        .values(input)
+        .returning();
 
       const [created] = await query.execute();
 
@@ -30,7 +35,10 @@ export class EmailVerificationCodeRepository implements IEmailVerificationCodeRe
 
   async deleteVerificationCode(code: string, conn: DrizzleConnection = db) {
     try {
-      const query = conn.delete(emailVerificationCodes).where(eq(emailVerificationCodes.code, code)).returning();
+      const query = conn
+        .delete(emailVerificationCodes)
+        .where(eq(emailVerificationCodes.code, code))
+        .returning();
 
       const [removed] = await query.execute();
 
@@ -40,9 +48,15 @@ export class EmailVerificationCodeRepository implements IEmailVerificationCodeRe
     }
   }
 
-  async deleteVerificationCodeByUserId(userId: string, conn: DrizzleConnection = db) {
+  async deleteVerificationCodeByUserId(
+    userId: string,
+    conn: DrizzleConnection = db,
+  ) {
     try {
-      const query = conn.delete(emailVerificationCodes).where(eq(emailVerificationCodes.userId, userId)).returning();
+      const query = conn
+        .delete(emailVerificationCodes)
+        .where(eq(emailVerificationCodes.userId, userId))
+        .returning();
 
       const [removed] = await query.execute();
 
@@ -52,7 +66,10 @@ export class EmailVerificationCodeRepository implements IEmailVerificationCodeRe
     }
   }
 
-  async getVerificationCodeByUserId(userId: string, conn: DrizzleConnection = db) {
+  async getVerificationCodeByUserId(
+    userId: string,
+    conn: DrizzleConnection = db,
+  ) {
     try {
       const query = conn.query.emailVerificationCodes.findFirst({
         where: (t, { eq }) => eq(t.userId, userId),

@@ -39,7 +39,9 @@ export const destroyContainer = () => {
 
 initializeContainer();
 
-export function getInjection<K extends keyof typeof DI_SYMBOLS>(symbol: K): DI_RETURN_TYPES[K] {
+export function getInjection<K extends keyof typeof DI_SYMBOLS>(
+  symbol: K,
+): DI_RETURN_TYPES[K] {
   return ApplicationContainer.get(DI_SYMBOLS[symbol]);
 }
 

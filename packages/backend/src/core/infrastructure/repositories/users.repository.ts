@@ -11,7 +11,10 @@ import type { DrizzleConnection } from "./transaction.js";
 
 @injectable()
 export class UsersRepository implements IUsersRepository {
-  async getUser(id: string, conn: DrizzleConnection = db): Promise<User | undefined> {
+  async getUser(
+    id: string,
+    conn: DrizzleConnection = db,
+  ): Promise<User | undefined> {
     try {
       const query = conn.query.users.findFirst({
         where: eq(users.id, id),
@@ -25,7 +28,10 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
-  async getUserByEmail(email: string, conn: DrizzleConnection = db): Promise<User | undefined> {
+  async getUserByEmail(
+    email: string,
+    conn: DrizzleConnection = db,
+  ): Promise<User | undefined> {
     try {
       const query = conn.query.users.findFirst({
         where: eq(users.email, email),
@@ -39,9 +45,17 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
-  async updateUserById(userId: string, input: Partial<User>, conn: DrizzleConnection = db) {
+  async updateUserById(
+    userId: string,
+    input: Partial<User>,
+    conn: DrizzleConnection = db,
+  ) {
     try {
-      const query = conn.update(users).set(input).where(eq(users.id, userId)).returning();
+      const query = conn
+        .update(users)
+        .set(input)
+        .where(eq(users.id, userId))
+        .returning();
 
       const [updated] = await query.execute();
 
@@ -58,11 +72,14 @@ export class UsersRepository implements IUsersRepository {
   async getUserByOAuthProvider(
     providerId: OAuthProvider,
     providerUserId: string,
-    conn: DrizzleConnection = db
+    conn: DrizzleConnection = db,
   ): Promise<User | undefined> {
     try {
       const query = conn.query.oauthAccounts.findFirst({
-        where: and(eq(oauthAccounts.providerId, providerId), eq(oauthAccounts.providerUserId, providerUserId)),
+        where: and(
+          eq(oauthAccounts.providerId, providerId),
+          eq(oauthAccounts.providerUserId, providerUserId),
+        ),
         with: {
           user: true,
         },
