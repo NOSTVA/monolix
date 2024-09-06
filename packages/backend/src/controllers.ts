@@ -6,6 +6,8 @@ import { signOutController } from "./core/interface-adapters/controllers/auth/si
 import { signUpController } from "./core/interface-adapters/controllers/auth/sign-up.controller.js";
 import { signInGitHubCallbackController } from "./core/interface-adapters/controllers/auth/github/sign-in.controller.js";
 import { signInGitHubController } from "./core/interface-adapters/controllers/auth/github/sign-in.controller.js";
+import { sendEmailVerificationCodeController } from "./core/interface-adapters/controllers/auth/send-email-verification-code.controller.js";
+import { verifyEmailVerificationCodeController } from "./core/interface-adapters/controllers/auth/verify-email-verification-code.controller.js";
 
 const auth = {
   authenticateUserController,
@@ -14,6 +16,8 @@ const auth = {
   signUpController,
   signInGitHubController,
   signInGitHubCallbackController,
+  sendEmailVerificationCodeController,
+  verifyEmailVerificationCodeController,
 };
 
 export { auth };

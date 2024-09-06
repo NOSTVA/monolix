@@ -1,12 +1,9 @@
-import { z } from "zod";
 import { getInjection } from "../../../../di/container.js";
 import type { Session } from "../../../entities/models/session.js";
 import type { User } from "../../../entities/models/user.js";
 import type { Cookie } from "../../../entities/models/cookie.js";
 
-export async function authenticateUserUseCase(input: {
-  cookie: string;
-}): Promise<{
+export async function authenticateUserUseCase(input: { cookie: string }): Promise<{
   cookie: Cookie;
   session: Session | null;
   user: Pick<User, "id" | "username" | "email" | "emailVerified"> | null;
@@ -14,8 +11,7 @@ export async function authenticateUserUseCase(input: {
   const authenticationService = getInjection("IAuthenticationService");
 
   const sessionId = authenticationService.readSessionCookie(input.cookie) || "";
-  const { session, user } =
-    await authenticationService.validateSession(sessionId);
+  const { session, user } = await authenticationService.validateSession(sessionId);
 
   let cookie = authenticationService.createBlankSessionCookie();
 

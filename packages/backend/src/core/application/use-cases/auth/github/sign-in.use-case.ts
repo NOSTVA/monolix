@@ -10,10 +10,7 @@ export async function signInUseCase(): Promise<{ url: URL; state: string }> {
   return { url, state };
 }
 
-export async function signInCallbackUseCase(input: {
-  code: string;
-  state: string;
-}) {
+export async function signInCallbackUseCase(input: { code: string; state: string }) {
   const github = new GitHub(env.GITHUB_CLIENT_ID, env.GITHUB_CLIENT_SECRET);
   const usersRepository = getInjection("IUsersRepository");
   const oauthRepository = getInjection("IOAuthRepository");
@@ -29,10 +26,7 @@ export async function signInCallbackUseCase(input: {
 
   const githubUser: GitHubUser = await githubUserResponse.json();
 
-  const existingUser = await usersRepository.getUserByOAuthProvider(
-    "github",
-    githubUser.id,
-  );
+  const existingUser = await usersRepository.getUserByOAuthProvider("github", githubUser.id);
 
   // login existing user
   if (existingUser) {
@@ -51,16 +45,16 @@ export async function signInCallbackUseCase(input: {
         username: githubUser.login,
         hashedPassword: null,
       },
-      tx,
+      tx
     );
 
-    const newOAuthAccount = oauthRepository.createAccount(
+    await oauthRepository.createAccount(
       {
         providerId: "github",
         providerUserId: githubUser.id,
         userId: userId,
       },
-      tx,
+      tx
     );
 
     return newUser;

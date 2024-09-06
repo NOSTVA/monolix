@@ -3,7 +3,7 @@ import { getInjection } from "../../../../di/container.js";
 import { createDate, TimeSpan } from "oslo";
 import env from "../../../env.js";
 
-export async function sendEmailVerificationCode(input: {
+export async function sendEmailVerificationCodeUseCase(input: {
   userId: string;
   email: string;
 }) {

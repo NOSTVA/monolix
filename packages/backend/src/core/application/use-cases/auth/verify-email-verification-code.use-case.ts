@@ -2,7 +2,7 @@ import { isWithinExpirationDate } from "oslo";
 import { getInjection } from "../../../../di/container.js";
 import { UnauthorizedError } from "../../../entities/errors/auth.js";
 
-export async function verifyEmailVerificationCode(input: {
+export async function verifyEmailVerificationCodeUseCase(input: {
   userId: string;
   email: string;
   code: string;

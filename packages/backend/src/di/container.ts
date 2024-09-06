@@ -8,7 +8,7 @@ import { MailerModule } from "./modules/mailer.module.js";
 import { type DI_RETURN_TYPES, DI_SYMBOLS } from "./types.js";
 import { EmailVerificationCodeModule } from "./modules/email-verification-code.module.js";
 
-var CONTAINER_INIT = false;
+let CONTAINER_INIT = false;
 const ApplicationContainer = new Container({
   defaultScope: "Singleton",
 });
@@ -39,9 +39,7 @@ export const destroyContainer = () => {
 
 initializeContainer();
 
-export function getInjection<K extends keyof typeof DI_SYMBOLS>(
-  symbol: K,
-): DI_RETURN_TYPES[K] {
+export function getInjection<K extends keyof typeof DI_SYMBOLS>(symbol: K): DI_RETURN_TYPES[K] {
   return ApplicationContainer.get(DI_SYMBOLS[symbol]);
 }
 
